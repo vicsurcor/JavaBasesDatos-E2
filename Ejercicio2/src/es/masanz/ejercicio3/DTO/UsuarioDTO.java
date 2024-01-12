@@ -1,18 +1,20 @@
+package es.masanz.ejercicio3.DTO;
+
 import java.sql.Date;
 import java.time.LocalDate;
 
 
-public class Usuario {
+public class UsuarioDTO {
     String fullName;
-    String userName;
+    String user;
     String email;
     String password;
-    java.sql.Date creationDate;
-    java.sql.Date modificationDate;
-    public Usuario(String fullName, String userName, String email, String password) {
+    Date creationDate;
+    Date modificationDate;
+    public UsuarioDTO(String fullName, String user, String email, String password) {
 
         this.fullName = fullName;
-        this.userName = userName;
+        this.user = user;
         this.email = email;
         this.password = password;
         this.creationDate = Date.valueOf(LocalDate.now());
@@ -29,11 +31,11 @@ public class Usuario {
     }
 
     public String getUserName() {
-        return userName;
+        return user;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.user = userName;
     }
 
     public String getEmail() {

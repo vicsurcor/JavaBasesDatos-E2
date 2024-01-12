@@ -1,11 +1,15 @@
+package es.masanz.ejercicio2.DAO;
+
+import es.masanz.ejercicio2.DTO.UsuarioDTO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestorUsuario {
+public class UsuarioDAO {
 
     private Connection conexion;
-    public GestorUsuario() {
+    public UsuarioDAO() {
 
         conectar();
 
@@ -22,9 +26,9 @@ public class GestorUsuario {
         }
     }
 
-    public Usuario crearUsuario(String fullName, String userName, String email, String password){
+    public UsuarioDTO crearUsuario(String fullName, String userName, String email, String password){
 
-        Usuario usuario = new Usuario(fullName,userName,email,password);
+        UsuarioDTO usuario = new UsuarioDTO(fullName,userName,email,password);
 
         try {
             PreparedStatement stmt = conexion.prepareStatement("INSERT INTO usuarios (full_name, user, email, password, creation_date, modification_date) VALUES (?,?,?,?,?,?)");
@@ -43,7 +47,7 @@ public class GestorUsuario {
         return usuario;
     }
 
-    public boolean borrarUsuario(Usuario usuario){
+    public boolean borrarUsuario(UsuarioDTO usuario){
 
         try {
             PreparedStatement stmt = conexion.prepareStatement("DELETE FROM usuarios where user = ?");
@@ -57,9 +61,9 @@ public class GestorUsuario {
         return true;
     }
 
-    public Usuario actualizarUsuario(Usuario usuario, String fullName, String userName, String email, String password){
+    public UsuarioDTO actualizarUsuario(UsuarioDTO usuario, String fullName, String userName, String email, String password){
 
-        Usuario usuarioAct = usuario;
+        UsuarioDTO usuarioAct = usuario;
         usuarioAct.setModificationDate();
 
         try {
@@ -81,16 +85,16 @@ public class GestorUsuario {
 
     }
 
-    public List<Usuario> obtenerUsuario(){
+    public List<UsuarioDTO> obtenerUsuario(){
 
 
-        List<Usuario> lista = new ArrayList<Usuario>();
+        List<UsuarioDTO> lista = new ArrayList<>();
         try {
             PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM usuarios");
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Usuario usuario = new Usuario(rs.getString("full_name"), rs.getString("user"), rs.getString("email"), rs.getString("password"));
+                UsuarioDTO usuario = new UsuarioDTO(rs.getString("full_name"), rs.getString("user"), rs.getString("email"), rs.getString("password"));
                 usuario.setCreationDate(rs.getDate("creation_date"));
                 lista.add(usuario);
             }
@@ -102,7 +106,7 @@ public class GestorUsuario {
         return lista;
     }
 
-    boolean autenticar(String usuario, String contrasena) {
+    public boolean autenticar(String usuario, String contrasena) {
         try {
             PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM usuarios WHERE user = ? AND password = ?");
             stmt.setString(1, usuario);

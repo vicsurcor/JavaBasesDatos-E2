@@ -1,3 +1,8 @@
+package es.masanz.ejercicio2;
+
+import es.masanz.ejercicio2.DAO.UsuarioDAO;
+import es.masanz.ejercicio2.DTO.UsuarioDTO;
+
 import java.util.List;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -5,15 +10,15 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        GestorUsuario gestor = new GestorUsuario();
+        UsuarioDAO gestor = new UsuarioDAO();
         gestor.conectar();
         gestor.crearUsuario("AntonioZ", "Anz", "Anz@gmail.com", "contra1");
         System.out.println(gestor.autenticar("Anz", "contra1"));
         gestor.actualizarUsuario(gestor.crearUsuario("Esdfsa","Es", "Es@gmail.com", "contra2"),"Eustaquio", "Eus", "Eus@gmail.com", "contraEus");
-        List<Usuario> lista = gestor.obtenerUsuario();
+        List<UsuarioDTO> lista = gestor.obtenerUsuario();
         for (int i = 0; i < lista.size(); i++) {
-            Usuario usuario =  lista.get(i);
-            gestor.borrarUsuario(usuario);
+            UsuarioDTO usuarioDTO =  lista.get(i);
+            gestor.borrarUsuario(usuarioDTO);
         }
         gestor.cerrar();
 
